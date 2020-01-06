@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es6",
+    "lib": ["es6"],
+    "strict": true,
+    "sourceMap": true,
+    "baseUrl": "src",
+    "outDir": "dist",
+    "plugins": [{ "name": "typescript-tslint-plugin" }],
+    "esModuleInterop": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}
