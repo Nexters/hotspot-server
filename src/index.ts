@@ -1,7 +1,36 @@
-import express from 'express'
+import express, { NextFunction, Request, Response } from 'express'
+import loginKakao from './actions/login'
+import { handleHttpError } from './middlewares/error'
+import { initializeDb } from './mongodb-client'
 
-const app = express()
+function asyncTryCatchWrapper(
+  asyncFn: (req: Request, res: Response, next: NextFunction) => void,
+) {
+  return async function wrappedAsyncFn(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      return await asyncFn(req, res, next)
+    } catch (e) {
+      return next(e)
+    }
+  }
+}
 
-app.get('/', (req, res) => res.send('Hello World!'))
+async function init() {
+  await initializeDb()
 
-app.listen(3000, () => console.log(`Example app listening on port 3000!`))
+  const app = express()
+
+  app.use(express.json())
+
+  app.post('/auth/login/kakao', asyncTryCatchWrapper(loginKakao))
+
+  app.use(handleHttpError)
+
+  app.listen(3000, () => console.log(`Hotspot server listening on port 3000!`))
+}
+
+init()
