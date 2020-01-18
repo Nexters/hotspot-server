@@ -26,6 +26,7 @@ async function init() {
 
   app.use(express.json())
 
+  app.get('/health', (req, res) => res.send())
   app.post('/auth/login/kakao', asyncTryCatchWrapper(loginKakao))
 
   app.use(handleHttpError)
