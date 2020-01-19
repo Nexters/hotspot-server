@@ -27,6 +27,10 @@ export default async function loginKakao(req: Request, res: Response) {
   })
 
   if (!response.ok) {
+    if (response.status === 401) {
+      throw new HttpError(401, 'Invalid Kakao Access Token')
+    }
+
     throw new HttpError(503, 'kakao API failure')
   }
 

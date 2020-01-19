@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express'
+import morgan from 'morgan'
 import loginKakao from './actions/login'
 import { handleHttpError } from './middlewares/error'
 import { initializeDb } from './mongodb-client'
@@ -24,6 +25,7 @@ async function init() {
 
   const app = express()
 
+  app.use(morgan('combined'))
   app.use(express.json())
 
   app.get('/health', (req, res) => res.send())
