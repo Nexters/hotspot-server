@@ -25,10 +25,11 @@ async function init() {
 
   const app = express()
 
+  app.get('/health', (req, res) => res.send())
+
   app.use(morgan('combined'))
   app.use(express.json())
 
-  app.get('/health', (req, res) => res.send())
   app.post('/auth/login/kakao', asyncTryCatchWrapper(loginKakao))
 
   app.use(handleHttpError)
