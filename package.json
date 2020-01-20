@@ -8,7 +8,7 @@
     "start": "node dist",
     "watch-server": "nodemon --exec 'npm start' --watch dist -e '*'",
     "watch": "concurrently \"npm run build -- -w\" \"npm run watch-server -- --delay 2\"",
-    "lint": "tslint src/**/*.ts"
+    "lint": "tslint src/**/*.ts src/*.ts"
   },
   "dependencies": {
     "express": "^4.17.1",
