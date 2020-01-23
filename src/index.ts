@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express'
 import morgan from 'morgan'
 import loginKakao from './actions/login'
+import { searchPlace } from './actions/place'
 import { handleHttpError } from './middlewares/error'
 import { initializeDb } from './mongodb-client'
 
@@ -31,6 +32,7 @@ async function init() {
   app.use(express.json())
 
   app.post('/auth/login/kakao', asyncTryCatchWrapper(loginKakao))
+  app.post('/place/search', asyncTryCatchWrapper(searchPlace))
 
   app.use(handleHttpError)
 
