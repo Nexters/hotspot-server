@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "node dist",
     "watch-server": "nodemon --exec 'npm start' --watch dist -e '*'",
-    "watch": "concurrently \"npm run build -- -w\" \"npm run watch-server -- --delay 2\"",
+    "watch": "concurrently \"npm run build -- -w\" \"npm run watch-server -- --delay 1\"",
     "lint": "tslint src/**/*.ts src/*.ts"
   },
   "dependencies": {

@@ -30,4 +30,6 @@ const schema = new Schema({
   },
 })
 
+schema.index({ 'social_account.kakao.id': 1 }, { unique: true })
+
 export const User = model<IUser>('users', schema)
