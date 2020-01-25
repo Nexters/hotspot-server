@@ -13,22 +13,27 @@ export interface IUser extends Document {
       gender: string
     }
   }
+  createdAt: Date
+  updatedAt: Date
 }
 
-const schema = new Schema({
-  _id: String,
-  accessToken: String,
-  social_account: {
-    kakao: {
-      id: Number,
-      nickname: String,
-      profileImage: String,
-      email: String,
-      ageRange: String,
-      gender: String,
+const schema = new Schema<IUser>(
+  {
+    _id: String,
+    accessToken: String,
+    social_account: {
+      kakao: {
+        id: Number,
+        nickname: String,
+        profileImage: String,
+        email: String,
+        ageRange: String,
+        gender: String,
+      },
     },
   },
-})
+  { timestamps: true },
+)
 
 schema.index({ 'social_account.kakao.id': 1 }, { unique: true })
 

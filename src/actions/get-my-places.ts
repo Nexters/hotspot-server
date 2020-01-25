@@ -9,10 +9,10 @@ export default async function getMyPlaces(req: Request, res: Response) {
 
   const { _id: userId } = req.user
 
-  const myPlaces = await MyPlace.find({ userId }, { __v: 0 })
+  const myPlaces = await MyPlace.find({ userId }).sort({ updatedAt: -1 })
 
   res.send({
-    myPlaces,
+    myPlaces: myPlaces.map((myPlace) => myPlace.toUserView()),
     count: myPlaces.length,
   })
 }

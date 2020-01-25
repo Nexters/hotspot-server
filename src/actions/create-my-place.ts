@@ -12,7 +12,7 @@ export default async function createMyPlace(req: Request, res: Response) {
   const { _id: userId } = req.user
   const { place, visited, memo, rating } = req.body
 
-  if (MyPlace.exists({ userId, 'place.kakaoId': place.kakaoId })) {
+  if (await MyPlace.exists({ userId, 'place.kakaoId': place.kakaoId })) {
     throw new HttpError(403, 'Place Already Exists')
   }
 
@@ -27,5 +27,7 @@ export default async function createMyPlace(req: Request, res: Response) {
 
   await newMyPlace.save()
 
-  res.send()
+  res.send({
+    myPlace: newMyPlace.toUserView(),
+  })
 }
