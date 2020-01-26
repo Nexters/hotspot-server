@@ -35,7 +35,7 @@ async function init() {
   app.use(express.json())
 
   app.post('/auth/login/kakao', asyncTryCatchWrapper(loginKakao))
-  app.post('/place/search', asyncTryCatchWrapper(searchPlace))
+  app.get('/place/search', asyncTryCatchWrapper(searchPlace))
 
   app.use(handleHttpError)
 
