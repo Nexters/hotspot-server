@@ -6,17 +6,7 @@ import loginKakao from './actions/login'
 import { searchPlace } from './actions/place'
 import { handleAuth } from './middlewares/auth'
 import { handleHttpError } from './middlewares/error'
-import { IUser } from './models/user'
 import { initializeDb } from './mongodb-client'
-
-declare global {
-  namespace Express {
-    // tslint:disable-next-line:interface-name
-    interface Request {
-      user?: IUser
-    }
-  }
-}
 
 function asyncTryCatchWrapper(
   asyncFn: (req: Request, res: Response, next: NextFunction) => void,
