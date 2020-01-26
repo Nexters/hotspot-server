@@ -19,7 +19,17 @@ export async function searchPlace(req: Request, res: Response) {
     },
   )
   const jsonPlaceList = await response.json()
-  const placeList = jsonPlaceList.documents
+  const placeList = jsonPlaceList.documents.map((place: any) => {
+    return {
+      kakaoId: place.id,
+      kakaoUrl: place.place_url,
+      placeName: place.place_name,
+      addressName: place.address_name,
+      roadAddressName: place.road_address_name || null,
+      x: place.x,
+      y: place.y,
+    }
+  })
 
   return res.send(placeList)
 }
