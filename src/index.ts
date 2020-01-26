@@ -1,7 +1,7 @@
+import dotenv from 'dotenv'
 import express, { NextFunction, Request, Response } from 'express'
 import morgan from 'morgan'
 import loginKakao from './actions/login'
-import dotenv from 'dotenv'
 
 import { searchPlace } from './actions/place'
 import { handleHttpError } from './middlewares/error'
@@ -27,8 +27,8 @@ async function init() {
   await initializeDb()
 
   const app = express()
-  dotenv.config();
-  
+  dotenv.config()
+
   app.get('/health', (req, res) => res.send())
 
   app.use(morgan('combined'))
