@@ -6,8 +6,9 @@ import { HttpError } from '../middlewares/error'
 const KAKAO_SEARCH_API_BASE_URL = 'https://dapi.kakao.com'
 
 export async function searchPlace(req: Request, res: Response) {
-  const { search_query: query } = req.body
-  const encodeQuery = encodeURI(query)
+  const { search_keyword: searchQuery }= req.query
+  const encodeQuery = encodeURI(searchQuery)
+  
   const response = await fetch(
     `${KAKAO_SEARCH_API_BASE_URL}/v2/local/search/keyword.json?query=${encodeQuery}`,
     {
@@ -16,9 +17,7 @@ export async function searchPlace(req: Request, res: Response) {
       },
     },
   )
-
   const jsonPlaceList = await response.json()
-
   const placeList = jsonPlaceList.documents
 
   return res.send(placeList)
