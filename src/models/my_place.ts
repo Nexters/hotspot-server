@@ -45,7 +45,9 @@ const schema = new Schema<IMyPlace>(
   { timestamps: true },
 )
 
+schema.index({ userId: 1 })
 schema.index({ userId: 1, 'place.kakaoId': 1 }, { unique: true })
+schema.index({ updatedAt: -1 })
 
 // tslint:disable-next-line:only-arrow-functions
 schema.methods.toUserView = function(): IMyPlaceUserView {

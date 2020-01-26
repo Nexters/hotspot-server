@@ -16,9 +16,14 @@ export function handleHttpError(
   res: Response,
   next: NextFunction,
 ) {
-  const status = err instanceof HttpError ? err.status : 500
-
-  res.status(status).send({
-    message: err.message,
-  })
+  if (err instanceof HttpError) {
+    res.status(err.status).send({
+      message: err.message,
+    })
+  } else {
+    console.error(err)
+    res.status(500).send({
+      message: 'Unexpected Error',
+    })
+  }
 }
