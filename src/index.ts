@@ -1,4 +1,3 @@
-import dotenv from 'dotenv'
 import express, { NextFunction, Request, Response } from 'express'
 import morgan from 'morgan'
 import loginKakao from './actions/login'
@@ -27,7 +26,6 @@ async function init() {
   await initializeDb()
 
   const app = express()
-  dotenv.config()
 
   app.get('/health', (req, res) => res.send())
 

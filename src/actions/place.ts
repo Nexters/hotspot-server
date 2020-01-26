@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import fetch from 'node-fetch'
+import { KAKAO_SEARCH_KEY } from '../config'
 
 import { HttpError } from '../middlewares/error'
 
@@ -13,7 +14,7 @@ export async function searchPlace(req: Request, res: Response) {
     `${KAKAO_SEARCH_API_BASE_URL}/v2/local/search/keyword.json?query=${encodeQuery}`,
     {
       headers: {
-        Authorization: `KakaoAK ${process.env.KAKAO_SEARCH_KEY}`,
+        Authorization: `KakaoAK ${KAKAO_SEARCH_KEY}`,
       },
     },
   )
