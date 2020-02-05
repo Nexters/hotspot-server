@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express'
 import morgan from 'morgan'
 import createMyPlace from './actions/create-my-place'
 import getMyPlaces from './actions/get-my-places'
+import findPlace from './actions/find-place'
 import loginKakao from './actions/login'
 import { searchPlace } from './actions/place'
 import { handleAuth } from './middlewares/auth'
@@ -39,6 +40,7 @@ async function init() {
   app.get('/place/search', asyncTryCatchWrapper(searchPlace))
   app.post('/place/my_places', asyncTryCatchWrapper(createMyPlace))
   app.get('/place/my_places', asyncTryCatchWrapper(getMyPlaces))
+  app.get('/place/find', asyncTryCatchWrapper(findPlace))
 
   app.use(handleHttpError)
 
