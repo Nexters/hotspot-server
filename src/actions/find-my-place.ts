@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { HttpError } from '../middlewares/error'
 import { MyPlace } from '../models/my_place'
 
-export default async function findPlace(req: Request, res: Response) {
+export default async function findMyPlace(req: Request, res: Response) {
   if (!req.user) {
     throw new HttpError(401, 'Authorization Required')
   }
