@@ -37,26 +37,24 @@ export async function searchPlace(req: Request, res: Response) {
 }
 
 function convertCategoryName(categoryName: string) {
-  let convertName = '기타'
-  const foodPattern = /음식점/
-  const culturePattern = /문화|예술|여행|가정|생활/
+  const categories = categoryName.split(' > ')
 
-  if (foodPattern.test(categoryName)) {
-    convertName = '맛집'
-  }
-  if (culturePattern.test(categoryName)) {
-    convertName = '문화'
-  }
-
-  switch (convertName) {
-    case '맛집':
+  switch (categories[0]) {
+    case '음식점': {
       if (categoryName.includes('카페')) {
-        convertName = '카페'
+        return '카페'
       } else if (categoryName.includes('술집')) {
-        convertName = '술집'
+        return '술집'
       }
-      break
+      return '맛집'
+    }
+    case '문화,예술':
+      return '문화'
+    case '여행':
+      return '문화'
+    case '가정,생활':
+      return '문화'
+    default:
+      return '기타'
   }
-
-  return convertName
 }
