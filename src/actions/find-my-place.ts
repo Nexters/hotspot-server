@@ -16,6 +16,6 @@ export default async function findMyPlace(req: Request, res: Response) {
   })
 
   res.send({
-    myPlace,
+    myPlace: myPlace ? myPlace.toUserView() : null,
   })
 }
