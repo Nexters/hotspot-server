@@ -8,14 +8,14 @@ export default async function findPlace(req: Request, res: Response) {
   }
 
   const { _id: userId } = req.user
-  const { kakaoId } = req.body
+  const { kakaoId } = req.params
 
-  const findMyPlace = await MyPlace.findOne({
+  const myPlace = await MyPlace.findOne({
     userId,
     'place.kakaoId': kakaoId,
   })
 
   res.send({
-    findPlace: findMyPlace,
+    myPlace,
   })
 }
