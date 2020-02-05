@@ -20,10 +20,12 @@ export async function searchPlace(req: Request, res: Response) {
   )
   const jsonPlaceList = await response.json()
   const placeList = jsonPlaceList.documents.map((place: any) => {
+    const categoryName = convertCategoryName(place.category_name)
     return {
       kakaoId: place.id,
       kakaoUrl: place.place_url,
       placeName: place.place_name,
+      categoryName,
       addressName: place.address_name,
       roadAddressName: place.road_address_name || null,
       x: place.x,
@@ -32,4 +34,29 @@ export async function searchPlace(req: Request, res: Response) {
   })
 
   return res.send(placeList)
+}
+
+function convertCategoryName(categoryName: string) {
+  let convertName = '기타'
+  const foodPattern = /음식점/
+  const culturePattern = /문화|예술|여행|가정|생활/
+
+  if (foodPattern.test(categoryName)) {
+    convertName = '맛집'
+  }
+  if (culturePattern.test(categoryName)) {
+    convertName = '문화'
+  }
+
+  switch (convertName) {
+    case '맛집':
+      if (categoryName.includes('카페')) {
+        convertName = '카페'
+      } else if (categoryName.includes('술집')) {
+        convertName = '술집'
+      }
+      break
+  }
+
+  return convertName
 }
