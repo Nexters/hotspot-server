@@ -40,7 +40,7 @@ async function init() {
   app.get('/place/search', asyncTryCatchWrapper(searchPlace))
   app.post('/place/my_places', asyncTryCatchWrapper(createMyPlace))
   app.get('/place/my_places', asyncTryCatchWrapper(getMyPlaces))
-  app.get('/place/find/:kakaoId', asyncTryCatchWrapper(findMyPlace))
+  app.get('/place/my_places/:kakaoId', asyncTryCatchWrapper(findMyPlace))
 
   app.use(handleHttpError)
 
