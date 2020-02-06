@@ -10,6 +10,7 @@ export interface IMyPlaceUserView {
   rating?: number
   createdAt: Date
   updatedAt: Date
+  deletedAt?: Date
 }
 
 export interface IMyPlace extends Document {
@@ -21,6 +22,7 @@ export interface IMyPlace extends Document {
   rating?: number
   createdAt: Date
   updatedAt: Date
+  deletedAt?: Date
 
   toUserView(): IMyPlaceUserView
 }
@@ -41,6 +43,7 @@ const schema = new Schema<IMyPlace>(
     visited: Boolean,
     memo: String,
     rating: Number,
+    deletedAt: Date,
   },
   { timestamps: true },
 )
@@ -60,6 +63,7 @@ schema.methods.toUserView = function(): IMyPlaceUserView {
     rating: this.rating,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
+    deletedAt: this.deletedAt,
   }
 }
 
