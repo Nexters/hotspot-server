@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express'
 import morgan from 'morgan'
 import createMyPlace from './actions/create-my-place'
+import deleteMyPlace from './actions/delete-my-place'
 import findMyPlace from './actions/find-my-place'
 import getMyPlaces from './actions/get-my-places'
 import loginKakao from './actions/login'
@@ -41,6 +42,7 @@ async function init() {
   app.post('/place/my_places', asyncTryCatchWrapper(createMyPlace))
   app.get('/place/my_places', asyncTryCatchWrapper(getMyPlaces))
   app.get('/place/my_places/:kakaoId', asyncTryCatchWrapper(findMyPlace))
+  app.delete('/place/my_places/:kakaoId', asyncTryCatchWrapper(deleteMyPlace))
 
   app.use(handleHttpError)
 
