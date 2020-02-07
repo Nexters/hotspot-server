@@ -63,7 +63,6 @@ schema.methods.toUserView = function(): IMyPlaceUserView {
     rating: this.rating,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
-    deletedAt: this.deletedAt,
   }
 }
 
