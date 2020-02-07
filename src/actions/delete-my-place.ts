@@ -10,13 +10,13 @@ export default async function deleteMyPlace(req: Request, res: Response) {
   const { _id: userId } = req.user
   const { userPlaceId } = req.params
 
+  if (!(await MyPlace.exists({ userId, _id: userPlaceId }))) {
+    throw new HttpError(404, 'Place Not Exists')
+  }
   const myPlace = await MyPlace.updateOne(
     { userId, _id: userPlaceId },
     { $currentDate: { deletedAt: true } },
   )
-  if (!myPlace) {
-    throw new HttpError(404, 'Place Not Exists')
-  }
 
   res.send({
     myPlace,
