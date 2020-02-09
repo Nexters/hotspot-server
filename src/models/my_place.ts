@@ -10,7 +10,6 @@ export interface IMyPlaceUserView {
   rating?: number
   createdAt: Date
   updatedAt: Date
-  deletedAt?: Date
 }
 
 export interface IMyPlace extends Document {
