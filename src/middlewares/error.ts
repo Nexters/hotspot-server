@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
+import { MulterError } from 'multer'
 
 export class HttpError extends Error {
   public status: number
@@ -19,6 +20,10 @@ export function handleHttpError(
   if (err instanceof HttpError) {
     res.status(err.status).send({
       message: err.message,
+    })
+  } else if (err instanceof MulterError && err.code === 'LIMIT_FILE_COUNT') {
+    res.status(403).send({
+      message: 'Too many files',
     })
   } else {
     console.error(err)
