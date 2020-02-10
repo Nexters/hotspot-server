@@ -10,9 +10,16 @@ export default async function deleteMyPlace(req: Request, res: Response) {
   const { _id: userId } = req.user
   const { userPlaceId } = req.params
 
-  if (!(await MyPlace.exists({ _id: userPlaceId }))) {
+  const findMyPlace = await MyPlace.findById({ _id: userPlaceId })
+
+  if (!findMyPlace) {
     throw new HttpError(404, 'Place Not Exists')
   }
+
+  if (findMyPlace.userId !== userId) {
+    throw new HttpError(403, 'This Place Is Not Registered By This User.')
+  }
+
   const myPlace = await MyPlace.updateOne(
     { userId, _id: userPlaceId },
     { $currentDate: { deletedAt: true } },
