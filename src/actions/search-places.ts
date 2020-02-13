@@ -2,11 +2,9 @@ import { Request, Response } from 'express'
 import fetch from 'node-fetch'
 import { KAKAO_SEARCH_KEY } from '../config'
 
-import { HttpError } from '../middlewares/error'
-
 const KAKAO_SEARCH_API_BASE_URL = 'https://dapi.kakao.com'
 
-export async function searchPlace(req: Request, res: Response) {
+export default async function searchPlaces(req: Request, res: Response) {
   const { search_keyword: searchQuery } = req.query
   const encodeQuery = encodeURI(searchQuery)
 

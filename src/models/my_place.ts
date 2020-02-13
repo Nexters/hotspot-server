@@ -1,4 +1,4 @@
-import { Document, model, Schema } from 'mongoose'
+import { Document, DocumentQuery, Model, model, Schema } from 'mongoose'
 import { IPlace } from './types/place'
 
 export interface IMyPlaceUserView {
@@ -26,6 +26,14 @@ export interface IMyPlace extends Document {
   toUserView(): IMyPlaceUserView
 }
 
+export interface IMyPlaceModel extends Model<IMyPlace> {
+  findExceptDeleted(conditions: any): DocumentQuery<IMyPlace[], IMyPlace>
+  findOneExceptDeleted(
+    conditions: any,
+  ): DocumentQuery<IMyPlace | null, IMyPlace>
+  existsExceptDeleted(filter: any): Promise<boolean>
+}
+
 const schema = new Schema<IMyPlace>(
   {
     _id: String,
@@ -48,10 +56,10 @@ const schema = new Schema<IMyPlace>(
 )
 
 schema.index({ userId: 1 })
-schema.index({ userId: 1, 'place.kakaoId': 1 }, { unique: true })
-schema.index({ updatedAt: -1 })
+schema.index({ userId: 1, 'place.kakaoId': 1 })
+schema.index({ createdAt: -1 })
+schema.index({ deletedAt: 1 })
 
-// tslint:disable-next-line:only-arrow-functions
 schema.methods.toUserView = function(): IMyPlaceUserView {
   return {
     id: this.id,
@@ -65,4 +73,16 @@ schema.methods.toUserView = function(): IMyPlaceUserView {
   }
 }
 
-export const MyPlace = model<IMyPlace>('user_places', schema)
+schema.statics.findExceptDeleted = function(conditions: any) {
+  return this.find({ ...conditions, deletedAt: null })
+}
+
+schema.statics.findOneExceptDeleted = function(conditions: any) {
+  return this.findOne({ ...conditions, deletedAt: null })
+}
+
+schema.statics.existsExceptDeleted = function(filter: any) {
+  return this.exists({ ...filter, deletedAt: null })
+}
+
+export const MyPlace = model<IMyPlace, IMyPlaceModel>('user_places', schema)
