@@ -37,19 +37,52 @@ export interface IMyPlaceModel extends Model<IMyPlace> {
 const schema = new Schema<IMyPlace>(
   {
     _id: String,
-    userId: String,
+    userId: {
+      type: String,
+      required: true,
+    },
     place: {
-      kakaoId: String,
-      kakaoUrl: String,
-      placeName: String,
+      kakaoId: {
+        type: String,
+        required: true,
+      },
+      kakaoUrl: {
+        type: String,
+        required: true,
+      },
+      placeName: {
+        type: String,
+        required: true,
+      },
+      categoryName: {
+        type: String,
+        required: true,
+      },
       addressName: String,
       roadAddressName: String,
-      x: String,
-      y: String,
+      x: {
+        type: String,
+        required: true,
+      },
+      y: {
+        type: String,
+        required: true,
+      },
     },
-    visited: Boolean,
+    visited: {
+      type: Boolean,
+      required: true,
+    },
     memo: String,
-    rating: Number,
+    rating: {
+      type: Number,
+      min: 1,
+      max: 3,
+      validate: {
+        validator: Number.isInteger,
+        message: '{VALUE} is not an integer value',
+      },
+    },
     deletedAt: Date,
   },
   { timestamps: true },
