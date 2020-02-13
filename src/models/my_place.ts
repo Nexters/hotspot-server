@@ -1,6 +1,11 @@
 import { Document, DocumentQuery, Model, model, Schema } from 'mongoose'
 import { IPlace } from './types/place'
 
+interface IImage {
+  cloudinaryId: string
+  url: string
+}
+
 export interface IMyPlaceUserView {
   id: string
   userId: string
@@ -8,6 +13,16 @@ export interface IMyPlaceUserView {
   visited: boolean
   memo?: string
   rating?: number
+  images?: IImage[]
+  bestMenu?: string[]
+  businessHours?: {
+    open: string
+    close: string
+  }
+  priceRange?: string
+  parkingAvailable?: boolean
+  allDayAvailable?: boolean
+  powerPlugAvailable?: boolean
   createdAt: Date
   updatedAt: Date
 }
@@ -19,6 +34,16 @@ export interface IMyPlace extends Document {
   visited: boolean
   memo?: string
   rating?: number
+  images?: IImage[]
+  bestMenu?: string[]
+  businessHours?: {
+    open: string
+    close: string
+  }
+  priceRange?: string
+  parkingAvailable?: boolean
+  allDayAvailable?: boolean
+  powerPlugAvailable?: boolean
   createdAt: Date
   updatedAt: Date
   deletedAt?: Date
@@ -33,6 +58,11 @@ export interface IMyPlaceModel extends Model<IMyPlace> {
   ): DocumentQuery<IMyPlace | null, IMyPlace>
   existsExceptDeleted(filter: any): Promise<boolean>
 }
+
+const imageSchema = new Schema({
+  cloudinaryId: { type: String, required: true },
+  url: { type: String, required: true },
+})
 
 const schema = new Schema<IMyPlace>(
   {
@@ -83,6 +113,30 @@ const schema = new Schema<IMyPlace>(
         message: '{VALUE} is not an integer value',
       },
     },
+    images: [imageSchema],
+    bestMenu: [String],
+    businessHours: {
+      open: {
+        type: String,
+        validate: {
+          validator: (val: string) =>
+            /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(val),
+          message: '{VALUE} is not an HH:MM type',
+        },
+      },
+      close: {
+        type: String,
+        validate: {
+          validator: (val: string) =>
+            /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(val),
+          message: '{VALUE} is not an HH:MM type',
+        },
+      },
+    },
+    priceRange: String,
+    parkingAvailable: Boolean,
+    allDayAvailable: Boolean,
+    powerPlugAvailable: Boolean,
     deletedAt: Date,
   },
   { timestamps: true },
@@ -95,7 +149,7 @@ schema.index({ deletedAt: 1 })
 
 schema.methods.toUserView = function(): IMyPlaceUserView {
   return {
-    id: this.id,
+    id: this._id,
     userId: this.userId,
     place: this.place,
     visited: this.visited,

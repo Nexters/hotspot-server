@@ -10,7 +10,19 @@ export default async function createMyPlace(req: Request, res: Response) {
   }
 
   const { _id: userId } = req.user
-  const { place, visited, memo, rating } = req.body
+  const {
+    place,
+    visited,
+    memo,
+    rating,
+    images,
+    bestMenu,
+    businessHours,
+    priceRange,
+    parkingAvailable,
+    allDayAvailable,
+    powerPlugAvailable,
+  } = req.body
 
   if (
     await MyPlace.existsExceptDeleted({
@@ -28,6 +40,13 @@ export default async function createMyPlace(req: Request, res: Response) {
     visited,
     memo,
     rating,
+    images,
+    bestMenu,
+    businessHours,
+    priceRange,
+    parkingAvailable,
+    allDayAvailable,
+    powerPlugAvailable,
   } as IMyPlace)
 
   await newMyPlace.save()
