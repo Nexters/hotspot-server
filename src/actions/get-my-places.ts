@@ -9,7 +9,9 @@ export default async function getMyPlaces(req: Request, res: Response) {
 
   const { _id: userId } = req.user
 
-  const myPlaces = await MyPlace.find({ userId }).sort({ updatedAt: -1 })
+  const myPlaces = await MyPlace.findExceptDeleted({ userId }).sort({
+    createdAt: -1,
+  })
 
   res.send({
     myPlaces: myPlaces.map((myPlace) => myPlace.toUserView()),

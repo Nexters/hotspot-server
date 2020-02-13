@@ -10,7 +10,7 @@ export default async function findMyPlace(req: Request, res: Response) {
   const { _id: userId } = req.user
   const { kakaoId } = req.params
 
-  const myPlace = await MyPlace.findOne({
+  const myPlace = await MyPlace.findOneExceptDeleted({
     userId,
     'place.kakaoId': kakaoId,
   })

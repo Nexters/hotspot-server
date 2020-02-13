@@ -5,7 +5,7 @@ import deleteMyPlace from './actions/delete-my-place'
 import findMyPlace from './actions/find-my-place'
 import getMyPlaces from './actions/get-my-places'
 import loginKakao from './actions/login'
-import { searchPlace } from './actions/place'
+import searchPlaces from './actions/search-places'
 import { handleAuth } from './middlewares/auth'
 import { handleHttpError } from './middlewares/error'
 import { initializeDb } from './mongodb-client'
@@ -38,7 +38,7 @@ async function init() {
   app.use(asyncTryCatchWrapper(handleAuth))
 
   app.post('/auth/login/kakao', asyncTryCatchWrapper(loginKakao))
-  app.get('/place/search', asyncTryCatchWrapper(searchPlace))
+  app.get('/place/search', asyncTryCatchWrapper(searchPlaces))
   app.post('/place/my_places', asyncTryCatchWrapper(createMyPlace))
   app.get('/place/my_places', asyncTryCatchWrapper(getMyPlaces))
   app.get('/place/my_places/:kakaoId', asyncTryCatchWrapper(findMyPlace))
