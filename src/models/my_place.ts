@@ -119,16 +119,14 @@ const schema = new Schema<IMyPlace>(
       open: {
         type: String,
         validate: {
-          validator: (val: string) =>
-            /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(val),
-          message: '{VALUE} is not an HH:MM type',
+          validator: (val: string) => /^([0-1]?[0-9]|2[0-3])$/.test(val),
+          message: '{VALUE} is not an Hour type',
         },
       },
       close: {
         type: String,
         validate: {
-          validator: (val: string) =>
-            /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(val),
+          validator: (val: string) => /^([0-1]?[0-9]|2[0-3])$/.test(val),
           message: '{VALUE} is not an HH:MM type',
         },
       },
