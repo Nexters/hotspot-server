@@ -9,7 +9,19 @@ export default async function updateMyPlace(req: Request, res: Response) {
   }
   const { _id: userId } = req.user
   const { userPlaceId } = req.params
-  const { visited, memo, rating } = req.body
+  const {
+    place,
+    visited,
+    memo,
+    rating,
+    images,
+    bestMenu,
+    businessHours,
+    priceRange,
+    parkingAvailable,
+    allDayAvailable,
+    powerPlugAvailable,
+  } = req.body
 
   const findMyPlace = await MyPlace.findById({ _id: userPlaceId })
 
