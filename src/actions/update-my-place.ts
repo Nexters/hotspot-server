@@ -1,9 +1,8 @@
 import { Request, Response } from 'express'
 import { HttpError } from '../middlewares/error'
-import { MyPlace } from '../models/my_place'
+import { IMyPlace, MyPlace } from '../models/my_place'
 
 export default async function updateMyPlace(req: Request, res: Response) {
-
   if (!req.user) {
     throw new HttpError(401, 'Authorization Required')
   }
@@ -23,20 +22,33 @@ export default async function updateMyPlace(req: Request, res: Response) {
     powerPlugAvailable,
   } = req.body
 
-  const findMyPlace = await MyPlace.findById({ _id: userPlaceId })
+  const myPlace = await MyPlace.findOneExceptDeleted({ _id: userPlaceId })
 
-  if (!findMyPlace) {
+  if (!myPlace) {
     throw new HttpError(404, 'Place Not Exists')
   }
 
-  if (findMyPlace.userId !== userId) {
+  if (myPlace.userId !== userId) {
     throw new HttpError(403, 'This Place Is Not Registered By This User.')
   }
 
-  const updateMyPlace = findMyPlace
-//   updateMyPlace ({ visited})
-  await findMyPlace.save()
+  myPlace.set({
+    place,
+    visited,
+    memo,
+    rating,
+    images,
+    bestMenu,
+    businessHours,
+    priceRange,
+    parkingAvailable,
+    allDayAvailable,
+    powerPlugAvailable,
+  })
+
+  myPlace.save()
+
   res.send({
-    myPlace: findMyPlace.toUserView(),
+    myPlace: myPlace.toUserView(),
   })
 }
