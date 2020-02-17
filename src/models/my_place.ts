@@ -153,6 +153,13 @@ schema.methods.toUserView = function(): IMyPlaceUserView {
     visited: this.visited,
     memo: this.memo,
     rating: this.rating,
+    images: this.images,
+    bestMenu?: this.bestMenu,
+    businessHours: this.businessHours
+    priceRange: this.priceRange,
+    parkingAvailable: this.parkingAvailable,
+    allDayAvailable: this.allDayAvailable,
+    powerPlugAvailable: this.powerPlugAvailable,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
   }
