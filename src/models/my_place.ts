@@ -154,8 +154,8 @@ schema.methods.toUserView = function(): IMyPlaceUserView {
     memo: this.memo,
     rating: this.rating,
     images: this.images,
-    bestMenu?: this.bestMenu,
-    businessHours: this.businessHours
+    bestMenu: this.bestMenu,
+    businessHours: this.businessHours,
     priceRange: this.priceRange,
     parkingAvailable: this.parkingAvailable,
     allDayAvailable: this.allDayAvailable,
